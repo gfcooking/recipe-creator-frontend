@@ -19,15 +19,20 @@
     "test": "react-app-rewired test",
     "eject": "react-app-rewired eject",
     "deploy": "gh-pages-deploy",
-    "clean-source": "rimraf README.md src webroot package.json"
+    "clean-after-build": "rimraf README.md src public package.json yarn.lock config-overrides.js"
   },
   "gh-pages-deploy": {
     "cname": "gfcooking.com",
+    "prep": [
+      "build"
+    ],
+    "staticpath": "build",
     "post": [
-      "clean-source"
+      "clean-after-build"
     ],
     "branch": "source",
-    "gh-pages": "master"
+    "gh-pages": "master",
+    "noprompt": true
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -40,5 +45,6 @@
   ],
   "devDependencies": {
     "gh-pages-deploy": "git+https://github.com/mbredif/gh-pages-deploy.git"
-  }
+  },
+  "homepage": "https://gfcooking.com"
 }

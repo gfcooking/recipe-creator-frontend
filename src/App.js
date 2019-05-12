@@ -55,7 +55,7 @@ class PageRenderer extends Component {
                     ingredientTableOrder.push(title);
                     ingredientTables[title] = curTable;
                 } else {
-                    let [amount, ingredient,] = ingredientLines[i].split(/\s{2,}/);
+                    let [amount, ingredient,] = ingredientLines[i].replace('\t', '    ').split(/\s{3,}/);
                     amount = amount.replace(/^[- ]*/, '').toLowerCase();
                     curTable.push([amount, ingredient]);
                 }
@@ -74,7 +74,7 @@ class PageRenderer extends Component {
                     {tableName.startsWith("_") ? <div/> : <h3>{tableName}</h3>}
                     <ul>
                         {this.state.ingredientTables[tableName].map(([amount, ingredient]) => {
-                            return <li>{amount} {ingredient}</li>;
+                            return <li><b>{amount}</b> {ingredient}</li>;
                         })}
                     </ul>
                 </div>

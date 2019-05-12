@@ -55,8 +55,8 @@ class PageRenderer extends Component {
                     ingredientTableOrder.push(title);
                     ingredientTables[title] = curTable;
                 } else {
-                    let [amount, ingredient,] = ingredientLines[i].replace('\t', '    ').split(/\s{3,}/);
-                    amount = amount.replace(/^[- ]*/, '').toLowerCase();
+                    let [amount, ingredient,] = ingredientLines[i].replace('\t', '    ').split(/\s{3,}/, 1);
+                    amount = amount.replace(/^[- ]*/, '').replace('tbs', 'tsp');
                     curTable.push([amount, ingredient]);
                 }
             }

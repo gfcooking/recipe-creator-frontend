@@ -72,18 +72,11 @@ class PageRenderer extends Component {
             {this.state.ingredientTableOrder.map(tableName => (
                 <div>
                     {tableName.startsWith("_") ? <div/> : <h3>{tableName}</h3>}
-                    <table>
-                        <tr>
-                            <th>Amount</th>
-                            <th>Ingredient</th>
-                        </tr>
+                    <ul>
                         {this.state.ingredientTables[tableName].map(([amount, ingredient]) => {
-                            return <tr>
-                                <td>{amount}</td>
-                                <td>{ingredient}</td>
-                            </tr>;
+                            return <li>{amount} {ingredient}</li>;
                         })}
-                    </table>
+                    </ul>
                 </div>
             ))}
             <h2>Directions</h2>
@@ -141,9 +134,10 @@ class App extends Component {
                                         {this.state.files.map(fn => {
                                             const loc = fn.replace('.txt', '');
                                             return <li>
-                                                <Link
-                                                    to={'/' + loc}>{loc.replace(/-/g, " ").replace(/([A-Z(]+)/g, ' $1')
-                                                    .replace(/^./, str => str.toUpperCase())}</Link>
+                                                <Link to={'/' + loc}>
+                                                    {loc.replace(/-/g, " ").replace(/([A-Z(]+)/g, ' $1')
+                                                        .replace(/^./, str => str.toUpperCase())}
+                                                </Link>
                                             </li>;
                                         })}
                                     </ul>

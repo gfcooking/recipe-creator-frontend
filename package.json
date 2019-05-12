@@ -38,6 +38,6 @@
     "not op_mini all"
   ],
   "devDependencies": {
-    "gh-pages-deploy": "^0.5.1"
+    "gh-pages-deploy": "git+https://github.com/mbredif/gh-pages-deploy.git"
   }
 }

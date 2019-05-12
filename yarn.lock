@@ -4457,15 +4457,15 @@ getpass@^0.1.1:
   dependencies:
     assert-plus "^1.0.0"
 
-gh-pages-deploy@^0.5.1:
-  version "0.5.1"
-  resolved "https://registry.yarnpkg.com/gh-pages-deploy/-/gh-pages-deploy-0.5.1.tgz#56100fdd4a642f4b1f7cba5233ad7e48c3facb2b"
-  integrity sha512-ut80nyds3eRMzWwcbyHfnTTwGq2OIvX2i56CBPxFvnKEubapF+tNWMvYs03phksnyQZYE21L3kVtfy3eCb78wg==
+"gh-pages-deploy@git+https://github.com/mbredif/gh-pages-deploy.git":
+  version "0.6.0"
+  resolved "git+https://github.com/mbredif/gh-pages-deploy.git#137170fbddffb1499842eae9323a76b1751d7073"
   dependencies:
     chalk "^1.1.1"
     gasket "^2.0.0"
     prompt "1.0.0"
     require-module "^0.1.0"
+    string-format "^2.0.0"
 
 glob-base@^0.3.0:
   version "0.3.0"
@@ -10083,6 +10083,11 @@ string-convert@^0.2.0:
   version "0.2.1"
   resolved "https://registry.yarnpkg.com/string-convert/-/string-convert-0.2.1.tgz#6982cc3049fbb4cd85f8b24568b9d9bf39eeff97"
   integrity sha1-aYLMMEn7tM2F+LJFaLnZvznu/5c=
+
+string-format@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/string-format/-/string-format-2.0.0.tgz#f2df2e7097440d3b65de31b6d40d54c96eaffb9b"
+  integrity sha512-bbEs3scLeYNXLecRRuk6uJxdXUSj6le/8rNPHChIJTn2V79aXVTR1EH2OH5zLKKoz0V02fOUKZZcw01pLUShZA==
 
 string-length@^2.0.0:
   version "2.0.0"

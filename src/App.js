@@ -4,11 +4,9 @@ import {Link} from 'react-router-dom'
 import 'antd/dist/antd.css';
 import './App.css'
 import {withRouter} from 'react-router-dom'
-import { Prompt } from 'react-router-dom'
 
 import {Layout, Menu, Breadcrumb, Input, Card, Row, Col, Icon, Modal, Tag} from 'antd';
 
-const {Meta} = Card;
 const {TextArea} = Input;
 const {Header, Content, Footer} = Layout;
 
@@ -278,7 +276,7 @@ class App extends Component {
     state = {recipes: []};
 
     componentWillMount() {
-        fetch(server + '/recipes', {
+	fetch(server + '/recipes', {
             method: 'GET',
             mode: 'cors',
             headers: {

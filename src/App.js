@@ -11,7 +11,7 @@ const {TextArea} = Input;
 const {Header, Content, Footer} = Layout;
 
 const cardShadow = {webkitBoxShadow: '1px 1px 10px #eee', boxShadow: '1px 1px 10px #eee'};
-const server = process.env.REACT_APP_BACKEND_URL;
+const server = process.env.REACT_APP_BACKEND_URL || '';
 
 
 class PageRenderer extends Component {

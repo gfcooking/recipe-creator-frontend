@@ -20,12 +20,12 @@ html,
 }
 
 .site-header-padder {
-    height: calc((100vw - 90em) / 2);
+    height: calc((100vw - 80em) / 2);
     max-height: 4em;
 }
 
 .site-footer-padder {
-    height: calc((90em - 100vw) / 2 + 4em);
+    height: calc((80em - 100vw) / 2 + 4em);
     max-height: 4em;
 }
 

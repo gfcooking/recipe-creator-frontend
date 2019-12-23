@@ -2,6 +2,7 @@
   "name": "recipe-creator",
   "version": "0.1.0",
   "private": true,
+  "proxy": "http://localhost:8000",
   "dependencies": {
     "antd": "^3.17.0",
     "babel-plugin-import": "^1.11.0",

@@ -19,8 +19,21 @@ html,
     position: relative;
 }
 
-.Site-content {
-    min-height: calc(100vh - 69px - 64px); /* will cover the 100% of viewport */
+.site-header-padder {
+    height: calc((100vw - 90em) / 2);
+    max-height: 4em;
+}
+
+.site-footer-padder {
+    height: calc((90em - 100vw) / 2 + 4em);
+    max-height: 4em;
+}
+
+.site-content {
+    min-height: calc(100vh - 64px - 50px - 69px - 10px); /* will cover the 100% of viewport */
+    max-width: 80em;
+    width: 100%;
+    margin: 0 auto;
     overflow: hidden;
     display: block;
     position: relative;

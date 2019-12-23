@@ -31,7 +31,7 @@ class PageRenderer extends Component {
           {tableName.length === 0 ? <div/> : <h3>{tableName}</h3>}
           <ul>
             {this.props.ingredientCategories[tableName].map(ingredient => {
-              return <li>{ingredient}</li>;
+              return <li key={ingredient}>{ingredient}</li>;
             })}
           </ul>
         </div>
@@ -256,7 +256,7 @@ class _RecipeCard extends Component {
             onClick={() => history.push('/view/' + this.props.uuid)}
             hoverable
       >
-        <p><i>{this.props.description}</i></p>
+        <p>{this.props.description}</p>
       </Card>
     </Col>;
   }
@@ -281,6 +281,7 @@ function setInt(a, b) {
 const RecipeCard = withRouter(_RecipeCard);
 
 class MainPageRenderer extends Component {
+  props = {tag: undefined};
   state = {searchBar: '', shownRecipes: [], errorText: '', recipes: []};
 
   setSearchBar = (text, recipes = undefined) => {
@@ -290,6 +291,9 @@ class MainPageRenderer extends Component {
     const allTags = new Set();
     const unknownTags = [];
     const state = {searchBar: text};
+    if (this.props.tag !== undefined) {
+      tags.push(this.props.tag);
+    }
     if (recipes === undefined) {
       recipes = this.state.recipes;
     } else {
@@ -348,7 +352,6 @@ class MainPageRenderer extends Component {
       const tagsFiltered = tags.length === 0 ? new Set(recipes) : filterSeries(recipes, tags.map(
         tag => x => x.tags.includes(tag)
       ));
-      console.log(tags, !tags, tagsFiltered);
       state.shownRecipes = [...setInt(textFiltered, tagsFiltered)];
     }
     this.setState(state);
@@ -366,20 +369,20 @@ class MainPageRenderer extends Component {
 
   render() {
     return <div>
-      <h1>Gluten Free Cooking</h1>
+      <Link to='/'><h1>Gluten Free Cooking</h1></Link>
       <p>Welcome to the GF Cooking homepage</p>
       <Form prefixCls={undefined}>
-      <Form.Item
-        validateStatus={this.state.errorText.length === 0 ? 'success' : 'error'}
-        help={this.state.errorText}
-      >
-      <Search
-        placeholder="Search recipes..."
-        onChange={e => this.setSearchBar(e.target.value)}
-        value={this.state.searchBar}
-        style={{ width: 200 }}
-      />
-      </Form.Item>
+        <Form.Item
+          validateStatus={this.state.errorText.length === 0 ? 'success' : 'error'}
+          help={this.state.errorText}
+        >
+          <Search
+            placeholder="Search recipes..."
+            onChange={e => this.setSearchBar(e.target.value)}
+            value={this.state.searchBar}
+            style={{width: 200}}
+          />
+        </Form.Item>
       </Form>
       <Row gutter={[20, 20]} type='flex'>
         {this.state.shownRecipes.map(fn => {
@@ -392,10 +395,6 @@ class MainPageRenderer extends Component {
 
 
 class App extends Component {
-  pathParts = () => {
-    return this.props.location.pathname.split('/').filter(x => x);
-  };
-
   render() {
     return (
       <Layout className="layout">

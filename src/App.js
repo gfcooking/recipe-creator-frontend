@@ -166,7 +166,7 @@ class _EditCard extends Component {
         <br/>
         <p>Ingredients:</p>
         <TextArea placeholder="Ingredients"
-                  defaultValue={Object.keys(this.props.ingredientCategories || {}).map(k => (k + '\n - ' + this.props.ingredientCategories[k].join('\n - ')).trim()).join('\n\n')}
+                  defaultValue={Object.keys(this.props.ingredientCategories || {}).map(k => ((k ? '=== ' + k + ' ===\n' : '') + this.props.ingredientCategories[k].join('\n'))).join('\n\n')}
                   onChange={e => this.setState({ingredientCategories: this.parseIngredientGroups(e.target.value)})}
                   autosize={{minRows: 3}}/>
         <br/>

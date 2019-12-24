@@ -56,15 +56,10 @@ class _EditCard extends Component {
   };
 
   parseIngredientGroups = text => {
-    const [first, ...others] = ('\n' + text.trim()).split(/\n(?!(?:\n|\s*-))/g);
+    const parts = [''].concat(text.trim().split(/^\s*(?:=|-){3}\s*([^\n]+)\s*(?:=|-){3}\s*$/gm));
     const groups = {};
-    others.forEach(section => {
-      const [title, ...lines] = section.trim().split(/\n\s*-\s*/g);
-      groups[title] = lines.map(x => x.trim()).filter(x => x.length !== 0);
-    });
-    const firstGroup = first.split('\n').map(x => x.trim()).filter(x => x.length !== 0);
-    if (firstGroup.length !== 0) {
-      groups[''] = firstGroup;
+    for (let i = 1; i < parts.length; i += 2) {
+      groups[parts[i - 1]] = parts[i].replace(/^\s*-\s*/gm, '').split('\n').map(x => x.trim()).filter(Boolean)
     }
     return groups;
   };
@@ -79,7 +74,7 @@ class _EditCard extends Component {
     };
   };
 
-  componentWillMount() {
+  componentDidMount() {
     this.setState({...this.state, ...this.props});
   }
 

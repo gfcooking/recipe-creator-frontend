@@ -6,7 +6,8 @@ if ! sudo echo "Building..."; then
 fi
 
 tmp_trash=/tmp/recipe-creator-previous-deployment
-mkdir -p "$tmp_trash"
+sudo rm -rf "$tmp_trash"
+mkdir "$tmp_trash"
 if ! yarn build; then
     exit 1
 fi

@@ -265,7 +265,6 @@ function extractPreview(content, charCount) {
     let sentence = sentences.pop();
     parts.push(sentence);
     charCount -= sentence.length + '. '.length;
-    console.log(sentence, charCount);
   }
   while (parts.length > 1 && charCount < 0) {
     let sentence = parts.pop();
@@ -317,6 +316,16 @@ function setInt(a, b) {
 }
 
 const RecipeCard = withRouter(_RecipeCard);
+
+function formatTitle(string) {
+  return string.split(' ')
+    .map(w => w[0].toUpperCase() + w.substr(1).toLowerCase())
+    .join(' ');
+}
+
+function formatTag(tag) {
+  return formatTitle(tag.replace(/-/g, ' '));
+}
 
 class MainPageRenderer extends Component {
   props = {tag: undefined};
@@ -405,6 +414,37 @@ class MainPageRenderer extends Component {
     }).then(r => r.json()).then(recipes => this.setSearchBar('', recipes));
   }
 
+  formatRecipes = (recipes, isGrouped) => {
+    const allRecipes = [...recipes];
+    const page = [];
+    const tags = (isGrouped ? shownTags : []).concat(['']);
+    for (let i = 0; i < tags.length; ++i) {
+      const tag = tags[i];
+      const parts = [];
+      for (let j = 0; j < allRecipes.length;) {
+        if (!tag || allRecipes[j].tags.includes(tag)) {
+          parts.push(allRecipes[j]);
+          allRecipes.splice(j, 1);
+        } else {
+          ++j;
+        }
+      }
+      parts.sort((a, b) => a.title.localeCompare(b.title));
+      if (parts.length > 0) {
+        if (tag || isGrouped) {
+          page.push(<h2>{formatTag(tag || 'other')}</h2>);
+        }
+        page.push(<Row key={tag} gutter={[20, 20]} type='flex'>
+          {parts.map(page => <RecipeCard key={page.uuid} {...page}/>)}
+        </Row>);
+        if (tag) {
+          page.push(<br/>);
+        }
+      }
+    }
+    return page;
+  };
+
   render() {
     return <div>
       <Link to='/'><h1>Gluten Free Cooking</h1></Link>
@@ -422,11 +462,7 @@ class MainPageRenderer extends Component {
           />
         </Form.Item>
       </Form>
-      <Row gutter={[20, 20]} type='flex'>
-        {this.state.shownRecipes.map(fn => {
-          return <RecipeCard key={fn.uuid} {...fn}/>;
-        })}
-      </Row>
+      {this.formatRecipes(this.state.shownRecipes, !this.state.searchBar)}
     </div>
   }
 }

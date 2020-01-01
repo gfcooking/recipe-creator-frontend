@@ -258,6 +258,30 @@ class ViewRecipePage extends Component {
   }
 }
 
+function extractPreview(content, charCount) {
+  let parts = [];
+  let sentences = content.split('. ').reverse();
+  while (charCount > 0 && sentences.length > 0) {
+    let sentence = sentences.pop();
+    parts.push(sentence);
+    charCount -= sentence.length + '. '.length;
+    console.log(sentence, charCount);
+  }
+  while (parts.length > 1 && charCount < 0) {
+    let sentence = parts.pop();
+    sentences.push(sentence);
+    charCount += sentence.length + '. '.length;
+  }
+  let preview = parts.join('. ');
+  if (charCount < 0) {
+    preview = preview.slice(0, preview.length + charCount - '...'.length) + '...';
+  }
+  if (!preview.endsWith('.')) {
+    preview += '.';
+  }
+  return preview;
+}
+
 class _RecipeCard extends Component {
   render() {
     const {history} = this.props;
@@ -270,7 +294,7 @@ class _RecipeCard extends Component {
             onClick={() => history.push('/view/' + this.props.uuid)}
             hoverable
       >
-        <p>{this.props.description}</p>
+        <p>{extractPreview(this.props.description, 80)}</p>
       </Card>
     </Col>;
   }

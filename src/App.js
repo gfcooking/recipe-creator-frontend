@@ -15,6 +15,17 @@ const cardShadow = {WebkitBoxShadow: '1px 1px 10px #eee', boxShadow: '1px 1px 10
 const server = process.env.REACT_APP_BACKEND_URL || '';
 
 
+function renderParagraphs(string, header = undefined) {
+  if (!string || string.length === 0) {
+    return undefined;
+  }
+  return <>
+    {header}
+    {string.split(/\n{2,}/g).map(x => <p key={x}>{x}</p>)}
+  </>;
+}
+
+
 class PageRenderer extends Component {
   render() {
     return <div>
@@ -23,7 +34,12 @@ class PageRenderer extends Component {
         top: '24px',
         right: '24px'
       }}><Icon type="edit" onClick={this.cancel} style={{fontSize: '2em', color: '#888'}}/></Link>
-      <h1>{this.props.title}</h1>
+      <h1>{this.props.title}&nbsp;&nbsp;
+        {this.props.tags.map(
+          tag => <Link to={'/tag/' + tag} key={tag}><Tag>{tag}</Tag></Link>
+        )}
+      </h1>
+
       <p><i>{this.props.description}</i></p>
       <h2>Ingredients</h2>
       {Object.keys(this.props.ingredientCategories).map(tableName => (
@@ -37,8 +53,8 @@ class PageRenderer extends Component {
         </div>
       ))}
       <h2>Directions</h2>
-      <p>{this.props.directions}</p>
-      {this.props.notes ? <p>{this.props.notes}</p> : <div/>}
+      {renderParagraphs(this.props.directions)}
+      {renderParagraphs(this.props.notes, <h3>Notes</h3>)}
     </div>;
   }
 }
@@ -179,7 +195,10 @@ class _EditCard extends Component {
         <br/>
         <br/>
         <p>Notes:</p>
-        <Input placeholder="Notes" defaultValue={this.props.notes} onChange={e => this.update('notes', e)}/>
+        <TextArea placeholder="Notes"
+                  defaultValue={this.props.notes}
+                  onChange={e => this.update('notes', e)}
+                  autosize={{minRows: 1,}}/>
         <br/>
         <br/>
         <p>Tags:</p>
@@ -398,11 +417,11 @@ class App extends Component {
           <Menu
             theme="dark"
             mode="horizontal"
-            defaultSelectedKeys={['1']}
+            selectedKeys={[{'/': 'home', '/add': 'new-recipe'}[this.props.location.pathname]]}
             style={{lineHeight: '64px'}}
           >
-            <Menu.Item key="1" active><a href="/#">Home</a></Menu.Item>
-            <Menu.Item key="2" active><Link to='/add'>New Recipe</Link></Menu.Item>
+            <Menu.Item key="home" active><a href="/#">Home</a></Menu.Item>
+            <Menu.Item key="new-recipe" active><Link to='/add'>New Recipe</Link></Menu.Item>
           </Menu>
         </Header>
         <div className='site-header-padder'/>

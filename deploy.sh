@@ -5,6 +5,8 @@ if ! sudo echo "Building..."; then
     exit 1
 fi
 
+yarn install
+
 tmp_trash=/tmp/recipe-creator-previous-deployment
 sudo rm -rf "$tmp_trash"
 mkdir "$tmp_trash"
